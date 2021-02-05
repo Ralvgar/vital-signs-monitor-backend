@@ -1,20 +1,14 @@
-import WebSocket from "ws";
+import { Server, Socket } from "socket.io";
 
-let wss;
+let io: Server;
 
 export class SocketService {
   static createServer = () => {
-    wss = new WebSocket.Server({
-      port: 8080,
-    });
-    wss.on("connection", (ws: WebSocket) => {
-      console.log("Connected");
-      ws.on("message", (msg: string) =>
-        console.log("Message from socket", msg)
-      );
-      ws.send("message");
-    });
+    io = new Server();
+    io.listen(3000);
+  };
+
+  static sendMessage = (msg: string) => {
+    io.emit("message", msg);
   };
 }
-
-// implementar inyeccion de dependencias
