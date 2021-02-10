@@ -1,11 +1,6 @@
 require("dotenv").config();
-import express from "express";
-import { mqttService } from "./mqtt/mqttService";
+import { MqttService } from "./services/MqttService";
+import { SocketService } from "./services/SocketService";
 
-const app = express();
-
-app.use(express.json());
-
-app.listen(process.env.PORT, () => {
-  mqttService.onConnect();
-});
+MqttService.connect();
+SocketService.createServer();
